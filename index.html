@@ -128,7 +128,35 @@
         console.log(window.map);
       });
       function onSelectChanged(){
-        console.log(window.map);
+        //window.map.setAllMap(null);
+
+        var borTemp = document.getElementById("borough").value;
+        var obj;
+            var testing = $.ajax({
+                url: 'model.php',
+                type: 'GET',
+                data: { borough: borTemp},
+                async: false,
+                success: function (data) {
+                  obj = eval(data);
+                },
+                error: function(){
+                    alert("ERROR");
+                }
+            });
+
+      for (i = 0; i < obj.length; i++) {
+
+                var lat = obj[i].latitude;
+                var long = obj[i].longitude;
+
+                var latlngset = new google.maps.LatLng(lat, long);
+
+                var marker = new google.maps.Marker({
+                    map: window.map, position: latlngset,title:"place"
+                });
+      }
+        google.maps.event.trigger(window.map, 'resize');
       }
 
     </script>

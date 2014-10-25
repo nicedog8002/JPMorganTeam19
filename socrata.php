@@ -1,5 +1,5 @@
 <?php
-namespace Socrata;
+//namespace Socrata;
 class Socrata {
   // The base URL for this Socrata API, ex: http://data.medicare.gov or http://www.socrata.com
   private $root_url = "http://opendata.socrata.com";
