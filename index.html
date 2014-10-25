@@ -13,7 +13,7 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script type="text/javascript">
-    
+    var markerArr = [];
       function initialize() {
         var mapOptions = {
           center: { lat: 40.8773774623, lng: -73.90},
@@ -101,6 +101,7 @@
             position: latlng,
             title: markers[i].complainType
           });
+          markerArr.push(marker);
 
           
         }
@@ -128,12 +129,15 @@
         console.log(window.map);
       });
       function onSelectChanged(){
-        //window.map.setAllMap(null);
-
+        //setAllMap(null);
+        var j;
+        for(j = 0; j < markerArr.length; j++){
+          markerArr[j].setMap(null);
+        }
         var borTemp = document.getElementById("borough").value;
         var obj;
             var testing = $.ajax({
-                url: 'model.php',
+                url: 'http://localhost/CFG/model.php',
                 type: 'GET',
                 data: { borough: borTemp},
                 async: false,
@@ -187,7 +191,7 @@
     <form role="form">
       <div class="form-group">
       
-        <input type="text" class="form-control" placeholder="Text input">
+        <!--input type="text" class="form-control" placeholder="Text input"-->
       </div>
     </form>
 
