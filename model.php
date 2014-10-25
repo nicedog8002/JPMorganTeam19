@@ -1,9 +1,11 @@
 <?php
 include 'socrata.php';
-//use \socrata\Socrata as Socrata;
+use \socrata\Socrata as Socrata;
 $socrata = new Socrata("http://data.cityofnewyork.us");
 $jsonData = $socrata->get("/resource/erm2-nwe9.json");
+
 $borough = $_GET['borough'];
+echo $borough;
 $data = [];
 		foreach($jsonData as $item){
 			if(isset($item['borough']) && isset($item['resolution_action_updated_date']) && isset($item['location'])){
@@ -25,6 +27,6 @@ $data = [];
 			$j++;
 		}
 		$jsonResult = json_encode($result, true);
-    print_r($jsonResult);
+   // print_r($jsonResult);
 		return $jsonResult;
 ?>
