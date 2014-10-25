@@ -2,21 +2,83 @@
 <html>
   <head>
     <style type="text/css">
-      html, body, #map-canvas { height: 80%; width: 80%; margin: 50px auto 0; padding: 0; text-align: center}
+      html, body, #map-canvas { height: 80%; width: 90%; margin: 50px auto 0; padding: 0; text-align: center}
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEMIbybvZkJHrip3YZngJ6eCLsPZWk5tw">
     </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
     <script type="text/javascript">
       function initialize() {
         var mapOptions = {
           center: { lat: 40.714623, lng: -74.006605},
-          zoom: 10
+          zoom: 8
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
+
+
+        var markers = [
+          {
+            "lat": "40.85837",
+            "longit": "-73.790034",
+            "complainType": "Noise"
+          },
+          {
+            "lat": "40.854137",
+            "longit": "-73.886957",
+            "complainType": "Noise Commercial"
+          },
+
+          //most recent ones
+          {
+            "lat": "40.868123",
+            "longit": "-73.9004416",
+            "complainType": "Noise Commercial"
+          },
+          {
+            "lat": "40.488250227",
+            "longit": "-73.877377",
+            "complainType": "Rodent"
+          },
+          {
+            "lat": "40.854137",
+            "longit": "-73.886957",
+            "complainType": "Noise Commercial"
+          },
+          {
+            "lat": "40.89357522",
+            "longit": "-73.8438994",
+            "complainType": "Blocked Driveway"
+          },
+          {
+            "lat": "40.855586239",
+            "longit": "-73.90018526",
+            "complainType": "Rodent"
+          },
+          {
+            "lat": "40.85069195",
+            "longit": "-73.900858115",
+            "complainType": "Noise Commercial"
+          }
+        ];
+
+        var i;
+        for(i = 0; i < markers.length; i++){
+          var latlng = new google.maps.LatLng(markers[i].lat, markers[i].longit);
+          
+
+          var marker = new google.maps.Marker({
+            map: map,
+            position: latlng,
+            title: markers[i].complainType
+          });
+
+          
+        }
       }
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
@@ -38,12 +100,23 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#neighborhood">Neighborhood</a></li>
             <li><a href="#about">Popular</a></li>
-            <li><a href="#contact">Categories</a></li>
+            <li><a href="categories.html">Categories</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
-    
+    <br/>
+    <!--input type="text" class="form-control" placeholder="Enter ZIP Code"-->
+    <label for="disabledTextInput">Select Your Neighborhood</label>
+    <select class="form-control">
+      <option>Bronx</option>
+      <option>Brooklyn</option>
+      <option>Manhattan</option>
+      <option>Queens</option>
+      <option>Staten Island</option>
+    </select>
     <div id="map-canvas"></div>
+    
+    
   </body>
 </html>

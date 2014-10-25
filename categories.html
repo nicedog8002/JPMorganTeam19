@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+	<head>
+		<title>
+			Categories
+		</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+	</head>
+
+	<body>
+	    <div id="container" style="width:100%; height:400px;"></div>
+	    <br/><br/><br/><br/><br/><br/>
+		<div id="container2" style="width:100%; height:400px;"></div>
+    	<div id="container3" style="width:100%; height:400px;"></div>
+
+		<script>
+      		$(function () { 
+			    $('#container').highcharts({
+			        chart: {
+			            type: 'bar'
+			        },
+			        title: {
+			            text: '311 Service Requests'
+			        },
+			        xAxis: {
+			            categories: ['Taxi Complaint', 'Rodent', 'Noise', 'Traffic Signal Condition']
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'Frequency'
+			            }
+			        },
+			        series: [{
+			            name: 'Complaints Since 2010',
+			            data: [2008, 21911, 11028, 29080]
+			        }]
+			    });
+			});
+$(function () {
+    $('#container2').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Timeline of 311 Service Requests'
+        },
+        subtitle: {
+            text: 'Source: WorldClimate.com'
+        },
+        xAxis: {
+            categories: ['2010', '2011', '2012', '2013', '2014']
+        },
+        yAxis: {
+            title: {
+                text: 'Frequency'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic Signal Condition',
+            data: [7470, 6012, 5932, 5240, 4426]
+        }, {
+            name: 'Taxi Complaint',
+            data: [420 , 416, 368, 303, 501]
+        }, {
+            name: 'Rodent',
+            data: [4326, 4320, 4051, 4749, 4462]
+        }, {
+            name: 'Noise',
+            data: [2099, 1985, 2189, 2427, 2338]
+        }]
+    });
+});
+$(function () {
+    $('#container3').highcharts({
+
+        chart: {
+            type: 'bubble',
+            zoomType: 'xy'
+        },
+
+        title: {
+            text: 'Highcharts Bubbles'
+        },
+
+        series: [{
+            data: [[97, 36, 79], [94, 74, 60], [68, 76, 58], [64, 87, 56], [68, 27, 73], [74, 99, 42], [7, 93, 87], [51, 69, 40], [38, 23, 33], [57, 86, 31]]
+        }, {
+            data: [[25, 10, 87], [2, 75, 59], [11, 54, 8], [86, 55, 93], [5, 3, 58], [90, 63, 44], [91, 33, 17], [97, 3, 56], [15, 67, 48], [54, 25, 81]]
+        }, {
+            data: [[47, 47, 21], [20, 12, 4], [6, 76, 91], [38, 30, 60], [57, 98, 64], [61, 17, 80], [83, 60, 13], [67, 78, 75], [64, 12, 10], [30, 77, 82]]
+        }]
+    });
+});
+    </script>
+	</body>
+</html>
