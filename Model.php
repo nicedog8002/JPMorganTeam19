@@ -45,22 +45,13 @@ class Model {
 				$issueType = $item['complaint_type'];
 				if(!isset($data[$borough][$issueType]['frequency'])){
 					$data[$borough][$issueType]['frequency'] = 1;
+				} else{
+					$data[$borough][$issueType]['issueName'] = $issueType;
+					$data[$borough][$issueType]['frequency']++;
 				}
-				$data[$borough][$issueType]['issueName'] = $issueType;
-				$data[$borough][$issueType]['frequency']++;
 			}
 		}
-		print_r($data);
-		//~ ksort($data);
-		//~ $topTen = array_slice($data[$borough], 0, 10, true);
-		//~ $result = [];
-		//~ $j = 0;
-		//~ foreach($topTen as $item) {
-			//~ $result[$j]['longitude'] = $item['longitude'];
-			//~ $result[$j]['latitude'] = $item['latitude'];
-			//~ $result[$j]['complaint_type'] = $item['complaint_type'];
-			//~ $j++;
-		//~ }
+		//print_r($data[$borough]);
 		$jsonResult = json_encode($data, true);
 		return $jsonResult;
 	}
