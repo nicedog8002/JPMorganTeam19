@@ -10,16 +10,19 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEMIbybvZkJHrip3YZngJ6eCLsPZWk5tw">
     </script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script type="text/javascript">
+    
       function initialize() {
         var mapOptions = {
           center: { lat: 40.8773774623, lng: -73.90},
           zoom: 12
         };
-        var bounds = new google.maps.LatLngBounds();
+        
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
+
         var testLocation = [
           {"lat": "40.73940874906709",
           "longit": "-73.97669936553606"},
@@ -101,6 +104,7 @@
 
           
         }
+        return map;
       }
 
 
@@ -118,9 +122,14 @@
       }*/
 
       
-      
-      google.maps.event.addDomListener(window, 'load', initialize);
-
+      var map = null;
+      google.maps.event.addDomListener(window, 'load', function(){
+        window.map = initialize();
+        console.log(window.map);
+      });
+      function onSelectChanged(){
+        console.log(window.map);
+      }
 
     </script>
   </head>
@@ -153,18 +162,79 @@
         <input type="text" class="form-control" placeholder="Text input">
       </div>
     </form>
+
     <br/>
     <!--input type="text" class="form-control" placeholder="Enter ZIP Code"-->
     <label for="disabledTextInput">Select Your Neighborhood</label>
-    <select class="form-control">
+    <select class="form-control" id="borough">
       <option>Bronx</option>
       <option>Brooklyn</option>
       <option>Manhattan</option>
       <option>Queens</option>
       <option>Staten Island</option>
     </select>
+
     <div id="map-canvas"></div>
-    
+    <div id="bubble-chart"></div>
+    <script>
+      document.getElementById("borough").addEventListener('change', onSelectChanged, false);
+      var neededData; 
+		$.getJson('Model.php',data,function(jsonData){
+			neededData = jsonData; 
+		}); 
+      d3.json(neededData, function(error, root){
+	
+var diameter = 800,
+    format = d3.format(",d"),
+    color = d3.scale.category20c();
+
+var bubble = d3.layout.pack()
+    .sort(null)
+    .size([diameter, diameter])
+    .padding(1.5);
+
+var svg = d3.select("#bubble-chart").append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .attr("class", "bubble");
+
+d3.json("Model.php", function(error, root) {
+
+
+  var node = svg.selectAll(".node")
+      .data(bubble.nodes(classes(root))
+      .filter(function(d) { return !d.children; }))
+      .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+  node.append("title")
+      .text(function(d) { return d.className + ": " + format(d.value); });
+
+  node.append("circle")
+      .attr("r", function(d) { return d.r;})
+      .style('fill', "#2176C7");
+
+  node.append("text")
+      .attr("dy", ".20em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.className.substring(0, d.r / 3) + "  " + d.value; });
+});
+
+function classes(root) {
+  var classes = [];
+  for(var y in root){
+	classes.push({className: root[y]['issueName'], value: root[y]['frequency']});
+	console.log(root[y]['frequency'] +  " " + root[y]['issueName']);
+  }
+  return {children: classes};
+}
+
+d3.select(self.frameElement).style("height", diameter + "px");
+})
+
+
+    </script>
     
   </body>
 </html>

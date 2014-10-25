@@ -28,7 +28,7 @@ d3.json("file.json", function(error, root) {
       .text(function(d) { return d.className + ": " + format(d.value); });
 
   node.append("circle")
-      .attr("r", function(d) { return d.r;})
+      .attr("r", function(d) { return d.r;})./ilo
       .style('fill', "#2176C7");
 
   node.append("text")

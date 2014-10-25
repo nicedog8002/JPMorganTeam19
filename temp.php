@@ -51,17 +51,6 @@ class Model {
 				}
 			}
 		}
-		
-		print_r($data[$borough]);
-		//~ $new_array = array();
-//~ 
-		//~ foreach ($data[$borough] as $key => $value) {
-			//~ array_push($new_array, array(
-			//~ 'name' => $key,
-			//~ 'children' => $value
-			//~ ));
-		//~ }
-		//print_r($new_array);
 		$jsonResult = json_encode($data[$borough], true);
 		
 		file_put_contents("file.json", $jsonResult);
